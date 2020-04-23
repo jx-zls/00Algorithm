@@ -1,0 +1,55 @@
+<html>
+    <body>
+        <button id="btn">按钮</button>
+    </body>
+
+    <script>
+        window.onload = () => {
+            let btn = document.getElementById('btn')
+            btn.onclick = () => {
+                console.log('two_sub ==', two_sub([7,1,5,3,4,4]))
+                console.log('two_sub_optimization ==', two_sub_optimization([7,1,5,3,4,4]))
+                console.log('two_sub_limit ==', two_sub_limit([7,1,5,3,4,4]))
+
+            }
+
+            let two_sub = (nums = []) => {
+                let max = 0
+                for (let i = 0; i < nums.length; i++) {
+                    for (let j = i + 1; j < nums.length; j++) {
+                        if(nums[i] < nums[j] && nums[j] - nums[i] > max){
+                            max = nums[j] - nums[i]
+                        }
+                    }
+                }
+                return max
+            }
+
+            let two_sub_optimization = (nums = []) => { 
+                if(nums.length == 0) return 0
+                let min_num = nums[0]
+                let max_profit = 0
+                for (let i = 0; i < nums.length; i++) {
+                    if(nums[i] < min_num){
+                        min_num = nums[i]
+                    }else if(nums[i] - min_num > max_profit){
+                        max_profit = nums[i] - min_num
+                    }
+                }
+                return max_profit
+            }
+
+            let two_sub_limit = (nums = []) => {
+                let last = 0
+                let max = 0
+                for (let i = 0; i < nums.length - 1; i++) {
+                    console.log(last, nums[i+1], nums[i])
+                    last = Math.max(0, last + nums[i+1] - nums[i])
+                    max = Math.max(max, last)
+                }
+                return max
+            }
+        }
+        
+    </script>
+</html>
