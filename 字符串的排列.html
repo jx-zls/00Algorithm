@@ -1,0 +1,51 @@
+<html>
+    <body>
+        <button id="btn">按钮</button>
+    </body>
+
+    <script>
+        window.onload = () => {
+            let btn = document.getElementById('btn')
+            btn.onclick = () => {
+                console.log('longestCommontPrefix ==', subString('abcdeabcdx', 'abcdxabcde'))
+            }
+
+            
+            // 滑动窗口，  
+            let subString = (strs, sub_str) => {
+                let needs = {}, window = {}
+                for (const key in sub_str) {
+                    needs[sub_str[key]] = needs[sub_str[key]] ? needs[sub_str[key]] + 1 : 1
+                    window[sub_str[key]] = 0
+                }
+                let left = 0, right = 0, vaid = 0;
+                while(right < strs.length){
+                    let right_str = strs[right]
+                    right++
+                    if(needs[right_str]){
+                        window[right_str] = window[right_str] + 1
+                        if(window[right_str] == needs[right_str]){
+                            vaid++
+                        }
+                    }
+
+                    while(right - left >= sub_str.length){
+                        if(vaid == Object.keys(needs).length){  // 此处出现问题，获取needs元素出现错误
+                            return true
+                        }
+                        let left_str = strs[left]
+                        left++
+                        if(needs[left_str]){
+                            if(window[left_str] == needs[left_str]) {
+                                vaid--
+                            }
+                            window[left_str]--
+                        }
+                    }
+                }
+                return false
+            }
+        }
+        
+    </script>
+</html>
