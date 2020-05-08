@@ -1,0 +1,52 @@
+<html>
+    <body>
+        <button id="btn">按钮</button>
+    </body>
+
+    <script>
+        window.onload = () => {
+            let btn = document.getElementById('btn')
+            btn.onclick = () => {
+            
+            }
+
+            let lengMaxLength = (s) => {
+                if(s.length == 0) return 0
+                let max = 0
+                let left = 0
+                let hash = {}
+                for (let i = 0; i < s.length; i++) {
+                    if(hash[s[i]]){
+                        left = Math.max(left,hash[s[i]]);
+
+                    }
+                    hash[s[i]] = i + 1
+                    max = Math.max(max, i - left + 1)
+                }
+
+                return max
+            }
+
+
+            // 通过数组
+
+            let lengthMaxForStr = (s) => {
+                if(s.length == 0) return 0
+                let arr = []
+                let max = 0
+                for (let i = 0; i < s.length; i++) {
+                    let idx = arr.indexOf(s[i])
+                    if(idx != '-1'){
+                        arr.splice(0, idx + 1)
+                    }
+                    arr.push(s.charAt(i))
+                    max = Math.max(max, arr.length)
+                }
+                return max
+            }
+
+           
+
+        }
+    </script>
+</html>
