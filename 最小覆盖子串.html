@@ -1,0 +1,56 @@
+<html>
+    <body>
+        <button id="btn">按钮</button>
+    </body>
+
+    <script>
+        window.onload = () => {
+            let btn = document.getElementById('btn')
+            btn.onclick = () => {
+                console.log('longestCommontPrefix ==', minCoverString('a', 'aa'))
+            }
+
+            
+            // 滑动窗口，  
+            let minCoverString = (strs, sub_str) => {
+                var needs = {}, window = {};
+                for (let i = 0; i < sub_str.length; i++) {
+                    needs[sub_str[i]] = needs[sub_str[i]] ? needs[sub_str[i]] + 1 : 1;
+                    window[sub_str[i]] = 0
+                }
+
+                let left = 0, right = 0, count = 0;
+                let start = 0, len = Number.MAX_VALUE
+
+                while(right < strs.length){
+                    let right_sub = strs[right]
+                    right++
+                    if(needs[right_sub]){
+                        window[right_sub]++
+                        if(needs[right_sub] == window[right_sub]){
+                            count++
+                        }
+                    }
+                   
+                    while(count == Object.keys(needs).length){
+                        if(right - left < len){
+                            start = left
+                            len = right - left
+                        }
+
+                        let left_sub = strs[left]
+                        left++
+                        if(needs[left_sub]){
+                            if(needs[left_sub] == window[left_sub]){
+                                count--
+                            }
+                            window[left_sub]--
+                        }
+                    }
+                }
+                return len == Number.MAX_VALUE ? "" : strs.substr(start, len)
+            }
+        }
+        
+    </script>
+</html>
