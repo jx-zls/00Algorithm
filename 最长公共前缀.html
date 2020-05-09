@@ -1,0 +1,76 @@
+<html>
+    <body>
+        <button id="btn">按钮</button>
+    </body>
+
+    <script>
+        window.onload = () => {
+            let btn = document.getElementById('btn')
+            btn.onclick = () => {
+                console.log('longestCommontPrefix ==', longestCommontPrefix(["flower","flow","flight"]))
+                console.log('longestCommentPrefix_1 ==', longestCommentPrefix_1(["flower","flow","flight"]))
+                console.log('longestCommentPrefix_2 ==', longestCommentPrefix_2(["flower","flow","flight"]))
+
+            }
+
+            let longestCommontPrefix = (arr) => {
+                if(arr == null || arr.length == 0) return ""
+                let fir_data = arr[0]
+                for (const index in arr) {
+                    while(arr[index].indexOf(fir_data) != 0){
+                        fir_data = fir_data.substring(0, fir_data.length - 1)
+                    }
+                }
+                return fir_data
+            }
+
+            let longestCommentPrefix_1 = (arr = []) => {
+                if(arr == null || arr.length == 0) return ""
+                let arr_1 = arr.sort()
+                let fir_data = arr_1[0]
+                let sec_data = arr_1[arr_1.length - 1]
+                while(sec_data.indexOf(fir_data) != 0){
+                        fir_data = fir_data.substring(0, fir_data.length - 1)
+                }
+                
+                return fir_data
+            }
+
+            let longestCommentPrefix_2 = (arr = []) => {
+                if(arr == null || arr.length == 0) return ""
+                let minLength = Number.MAX_VALUE
+                for (const key in arr) {
+                    minLength = Math.min(minLength, arr[key].length)
+                }
+
+                let low = 1, high = minLength
+                while(low <= high){
+                    let midden = Math.floor((low + high) / 2)
+                    console.log('midden ==', midden, low, high)
+                    if(hasCommontPrefix(arr, midden)){
+                        low = midden + 1
+                        console.log('====== true ==', low)
+                    }else{
+                        high = midden - 1
+                        console.log('====== false ==', high)
+                    }
+                }
+                return arr[0].substring(0, (low + high) / 2)
+            }
+
+            let hasCommontPrefix = (arr = [], len) => {
+                let sub_str = arr[0].substring(0, len)
+                console.log('sub_str', sub_str)
+                for (let i = 0; i < arr.length; i++) {
+                    if(arr[i].indexOf(sub_str) != 0){
+                        return false
+                    }
+                }
+                return true
+            }
+
+           
+
+        }
+    </script>
+</html>
