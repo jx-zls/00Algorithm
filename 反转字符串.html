@@ -1,0 +1,82 @@
+
+<html>
+    <body>
+        <button id="btn">按钮</button>
+    </body>
+
+    <script>
+        window.onload = () => {
+            let btn = document.getElementById('btn')
+            btn.onclick = () => {
+                console.log('twoMut ==', reseverStr2("  hello world!  "))
+            }
+
+        
+
+          const reseverStr = (str = '') => {
+                if(str == ' ' || str.length == 0) return ""
+
+                let strs = str.split(" ")
+                let newStrs = strs.reverse()
+                let newStr = ''
+                for (const key in newStrs) {
+                    if(newStrs[key] != ' ' && newStrs[key].length != 0){
+                        newStr = newStr + newStrs[key] + " "
+                    }
+                }
+
+                return newStr.length > 0 ? newStr.substr(0, newStr.length - 1) : ""
+          }
+
+          const reseverStr2 = (str = '') => { // "hello world!"
+              if(str == ' ' || str.length == 0) return ''
+              let stack = new Stack()
+              let temp = ''
+              let p = 0
+              for (const substr of str) {
+                  if(str[p] == ' '){
+                    if(temp != ''){
+                        stack.push(temp)
+                        temp = ''
+                    }
+                    
+                  }else{
+                      temp += substr
+                      if(p == str.length - 1){
+                          stack.push(temp)
+                      }
+                  }
+                  p++
+              }
+
+              let result = ''
+              while(!stack.isEmpty()){
+                    result += stack.peek()
+                    result += ' '
+                    stack.pop()
+              }
+              return result != '' ? result.substr(0, result.length - 1) : result
+          }
+
+          function Stack (){
+            let items = []
+            
+            this.push = function(ele){
+                items.push(ele)
+            }
+            this.pop = function(){
+            return items.pop()
+            }
+            this.peek = function(){
+                return items[items.length - 1]
+            }
+            this.isEmpty = function(){
+                return items.length === 0
+            }
+            this.clear = function(){
+                items = []
+            }
+        }
+    }
+    </script>
+</html>
