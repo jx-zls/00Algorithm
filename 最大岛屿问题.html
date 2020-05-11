@@ -1,0 +1,56 @@
+
+<html>
+    <body>
+        <button id="btn">按钮</button>
+    </body>
+
+    <script>
+        window.onload = () => {
+            let btn = document.getElementById('btn')
+            btn.onclick = () => {
+                console.log('twoMut ==', findMaxGridF([[0,0,1,0,0,0,0,1,0,0,0,0,0],
+ [0,0,0,0,0,0,0,1,1,1,0,0,0],
+ [0,1,1,0,1,0,0,0,0,0,0,0,0],
+ [0,1,0,0,1,1,0,0,1,0,1,0,0],
+ [0,1,0,0,1,1,0,0,1,1,1,0,0],
+ [0,0,0,0,0,0,0,0,0,0,1,0,0],
+ [0,0,0,0,0,0,0,1,1,1,0,0,0],
+ [0,0,0,0,0,0,0,1,1,0,0,0,0]]))
+            }
+
+            const findMaxGridF = (data) => {
+                let result = 0
+                let count = 0
+
+                var backtrack = (data, row, col) => {
+                    if(row >= data.length || col >= data[0].length || row < 0 || col < 0){
+                        return 
+                    }
+                    if(data[row][col] == 1){
+                        count ++
+                        data[row][col] = 0
+                        backtrack(data, row - 1, col)
+                        backtrack(data, row, col + 1)
+                        backtrack(data, row, col - 1)
+                        backtrack(data, row + 1, col)
+                    }
+                }
+
+                for (let i = 0; i < data.length; i++) {
+                    for (let j = 0; j < data[i].length; j++) {
+                        backtrack(data,i, j)
+                        result = Math.max(result, count)
+                        count = 0
+                    }
+                } 
+
+                return result
+            }
+
+            
+
+            
+
+        }
+    </script>
+</html>
