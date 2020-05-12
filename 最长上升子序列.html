@@ -1,0 +1,36 @@
+
+<html>
+    <body>
+        <button id="btn">按钮</button>
+    </body>
+
+    <script>
+        window.onload = () => {
+            let btn = document.getElementById('btn')
+            btn.onclick = () => {
+                console.log('twoMut ==', lengthOfLIS([2, 2]))
+            }
+
+            var lengthOfLIS = function(nums) { // [2,5,3,7,101,18] [1, ]
+                let dp = new Array(nums.length).fill(1)
+                let max = 0
+                for (let i = 0; i < nums.length; i++) {
+                    for (let j = 0; j < i; j++) {
+                        if(nums[i] > nums[j]){
+                            dp[i] = Math.max(dp[i], dp[j] + 1) 
+                            if(max <= dp[i]) max = dp[i]
+                        }
+                    }
+                }
+                console.log('dp ==', dp, max)
+                // var i = 0
+                // var max = 0
+                // while(i < nums.length){
+                //     max = Math.max(dp[i], max)
+                //     i++
+                // }
+                return max
+            };          
+        }
+    </script>
+</html>
