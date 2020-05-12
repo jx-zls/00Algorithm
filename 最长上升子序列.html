@@ -22,13 +22,12 @@
                         }
                     }
                 }
-                console.log('dp ==', dp, max)
-                // var i = 0
-                // var max = 0
-                // while(i < nums.length){
-                //     max = Math.max(dp[i], max)
-                //     i++
-                // }
+                var i = 0
+                var max = 0
+                while(i < nums.length){
+                    max = Math.max(dp[i], max)
+                    i++
+                }
                 return max
             };          
         }
