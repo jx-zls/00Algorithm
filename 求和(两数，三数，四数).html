@@ -1,0 +1,89 @@
+<html>
+    <body>
+        <button id="btn">按钮</button>
+    </body>
+
+    <script>
+        window.onload = () => {
+            let btn = document.getElementById('btn')
+            btn.onclick = () => {
+               let two_result = twoF([3, 5, 2], 7)
+               let the_result = threeSum([-1,0,1,2,-1,-4])
+               fourSum([1,0,-1,0,-2,2], 0)
+            }
+
+            let twoF = (sum=[], target) => {
+                let datas = {}
+                for (let i = 0; i < sum.length; i++) {
+                    if(datas[sum[i]]){
+                        return [datas[sum[i]], sum[i]]
+                    }else{
+                        datas[target - sum[i]] = sum[i]
+                    }
+                }
+            }
+
+
+            let fourSum = (nums=[], target) => {
+                let result = []
+                if(nums.length < 4){
+                    return result
+                }
+                nums = nums.sort((a, b) => a - b)
+                for (let i = 0; i < nums.length; i++) {
+                    if(i > 0 && nums[i] == nums[i - 1]) continue;
+                    for (let j = i + 1; j < nums.length; j++) {
+                        if(j > i + 1 && nums[j] == nums[j - 1]) continue;
+                        let first = j + 1
+                        let last = nums.length - 1
+                        while(first < last){
+                            let sum = nums[i] + nums[j] + nums[first] + nums[last]
+                            if(sum == target){
+                                result.push([nums[i], nums[j], nums[first], nums[last]])
+                                while(first < last && nums[first] == nums[first + 1]) first++
+                                while(first < last && nums[last] == nums[last + 1]) last--
+                                first++
+                                last--
+                            } else{
+                                if(sum < target) first++
+                                if(sum > target) last--
+                            }
+                        }
+                    }
+                }
+                return result
+            }
+
+            let threeSum = (nums=[], target) => {
+                let result = []
+                if(nums.length < 3){
+                    return result;
+                }
+                nums = nums.sort((a, b) => a - b)
+                
+                for (let i = 0; i < nums.length; i++) {
+                    const data = nums[i];
+                    let first = i + 1
+                    let last = nums.length - 1
+                    if(data > 0) break
+                    if(i > 0 && nums[i] == nums[i - 1]) continue;
+                    while(first <last){
+                        let sum = nums[i] + nums[first ] + nums[last]
+                        if(sum == 0){
+                            result.push([nums[i], nums[first], nums[last]])
+                            while(first < last && nums[first] == nums[first + 1]) first++
+                            while(first < last && nums[last] == nums[last + 1]) last--
+                            first++
+                            last--
+                        }else{
+                            if(sum < 0) first++
+                            if(sum > 0) last--
+                        }
+                    }
+                }
+                return result;
+            }
+
+        }
+    </script>
+</html>
