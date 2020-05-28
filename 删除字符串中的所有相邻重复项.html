@@ -1,0 +1,29 @@
+
+<html>
+    <body>
+        <button id="btn">按钮</button>
+    </body>
+
+    <script>
+        window.onload = () => {
+            let btn = document.getElementById('btn')
+            btn.onclick = () => {
+                console.log('twoMut ==', lengthOfLIS([2, 2]))
+            }
+
+            var removeDuplicates = function(S) {
+                if(S == null || S.length == 0) return ''
+                var stack = [S[0]]
+                for(let i = 1; i<S.length; i++){
+                        if(S[i] == stack[stack.length - 1]){
+                            stack.pop()
+                        }else{
+                            stack.push(S[i])
+                        }
+                    
+                }
+                return stack.join('')
+            };        
+        }
+    </script>
+</html>
