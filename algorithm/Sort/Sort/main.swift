@@ -215,11 +215,119 @@ func merage(data1: [Int], data2: [Int]) -> [Int] {
 }
 
 
-let mergedData = mergeSort(arr: merge_datas)
-print("========= ", mergedData)
+//let mergedData = mergeSort(arr: merge_datas)
+//print("========= ", mergedData)
+
+
+// 快速排序
+//func quickSort(quickData: inout [Int]) -> [Int] {
+//
+//    if quickData.count > 1 {
+//        let s = quickSortHelper(currentData: &quickData)
+//        print(s, quickData)
+//
+//        var leftArr = Array(quickData[0..<s])
+//        var rightArr = Array(quickData[s..<quickData.count])
+//        quickData.replaceSubrange(0 ..< s, with: quickSort(quickData: &leftArr))
+//        quickData.replaceSubrange(s ..< quickData.count, with: quickSort(quickData: &rightArr))
+//
+//    }
+//    return quickData
+//}
+//func quickSortHelper(currentData: inout [Int]) -> Int {
+//
+////    var currentData = array
+//
+//    let l = 0
+//    let i = l + 1
+//    var s = l
+//    for idx in i ..< currentData.count {
+//        if currentData[idx] < currentData[l] {
+//            s += 1
+//            let temp = currentData[idx]
+//            currentData[idx] = currentData[s]
+//            currentData[s] = temp
+//        }
+//    }
+//
+//    let l_temp = currentData[s]
+//    currentData[s] = currentData[l]
+//    currentData[l] = l_temp
+//
+//
+//    return s
+//}
+//
+//var quick_datas = [5, 20, 8, 3, 6, 1, 7, 2]
+//
+//print("end ===", quick_datas)
+//// 5 3. 8 20. 6 1  7 2
+//// 5 3  1. 20 6 8. 7 2
+//// 5 3  1. 2. 6 8  7 20
+//// 2 3  1  5  6 8  7 20
+//
+//
+//
+//let arr = quickSort(quickData: &quick_datas)
+//
+//print("quick_data == ", arr)
 
 
 
 
+// power action
+func powerFC(a: Int, n: Int) -> Int {
+    
+    if a == 0 {
+        return 0
+    }
+    
+    if n == 0 {
+        return 1
+    }
+    
+    if n % 2 == 0 {
+        let odd = powerFC(a: a * a, n: n / 2)
+        return odd
+    } else {
+        let evv = powerFC(a: a * a, n: n / 2) * a
+        return evv
+    }
+}
+
+let result = powerFC(a: 2, n: 4)
+print("powerFC result ==", result)
+
+
+var mon_datas = [-1, 5, 6, 8, 9, 1, 2, 7, -1]
+
+func monAction() -> Int {
+    var l = 0
+    var r = mon_datas.count - 1
+    var middle = 0
+    while l + 1 < r {
+        middle = l + (r - l) / 2
+        if mon_datas[middle] > mon_datas[middle - 1], mon_datas[middle] > mon_datas[middle + 1] {
+            return middle
+        }
+        
+        if mon_datas[middle] > mon_datas[middle - 1], mon_datas[middle] < mon_datas[middle + 1] {
+            l = middle - 1
+        }
+        
+        if mon_datas[middle] < mon_datas[middle - 1], mon_datas[middle] > mon_datas[middle + 1] {
+            r = middle + 1
+        }
+        
+        if mon_datas[middle] < mon_datas[middle - 1], mon_datas[middle] < mon_datas[middle + 1] {
+            r = middle + 1
+        }
+    }
+    
+    return -1
+}
+
+let idx = monAction()
+print("idx= == ", idx)
 
 
