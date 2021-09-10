@@ -303,6 +303,7 @@ func reversalTable(nodeList: NodeList?) -> Node {
 
 print("============= sort \n")
 
+// 排序
 func sortTable(headNode: Node?) -> Node? {
     
     if headNode == nil {
@@ -328,6 +329,7 @@ func sortTable(headNode: Node?) -> Node? {
     
     return result
 }
+
 
 
 func mergeList(leftNode: Node, rightNode: Node) -> Node {
