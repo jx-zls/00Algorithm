@@ -331,3 +331,29 @@ let idx = monAction()
 print("idx= == ", idx)
 
 
+var firstArr = [3, 5, 5, 8, 5, 2, 4]
+var secondArr = [5, 8, 5, 6]
+
+func inserCollection(data1: [Int], data2: [Int]) -> [Int] {
+    
+    var i = 0
+    var j = 0
+    var result: [Int] = []
+    let localData = data1.count > data2.count ? data1 : data2
+    
+    for (_, val) in localData.enumerated() {
+        if j < secondArr.count, data1[i] == data2[j] {
+            result.append(val)
+            i += 1
+            j += 1
+        } else {
+            i += 1
+        }
+    }
+    return result
+}
+
+let inserArr = inserCollection(data1: firstArr, data2: secondArr)
+print("inserArr ==", inserArr)
+
+
