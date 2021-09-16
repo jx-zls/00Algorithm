@@ -160,13 +160,13 @@ let nodeObj = NodeList()
 
 
 //nodeObj.addLast(value: 1)
+nodeObj.addLast(value: 1)
+nodeObj.addLast(value: 2)
 nodeObj.addLast(value: 3)
-nodeObj.addLast(value: 9)
-nodeObj.addLast(value: 4)
-nodeObj.addLast(value: 13)
-nodeObj.addLast(value: 14)
-nodeObj.addLast(value: 12)
-nodeObj.addLast(value: 18)
+//nodeObj.addLast(value: 13)
+//nodeObj.addLast(value: 14)
+//nodeObj.addLast(value: 12)
+//nodeObj.addLast(value: 18)
 //nodeObj.addLast(value: 12)
 
 print("===== 插入前")
@@ -356,10 +356,144 @@ func mergeList(leftNode: Node, rightNode: Node) -> Node {
     return headNode.next!
 }
 
-nodeObj.printListP(currentNode: nodeObj.headNode.next!)
-let sortResult = sortTable(headNode: nodeObj.headNode.next)
-nodeObj.printListP(currentNode: sortResult!)
+//nodeObj.printListP(currentNode: nodeObj.headNode.next!)
+//let sortResult = sortTable(headNode: nodeObj.headNode.next)
+//nodeObj.printListP(currentNode: sortResult!)
+
+// 合并
+
+ public class ListNode {
+    public var val: Int
+    public var next: ListNode?
+    public init() { self.val = 0; self.next = nil; }
+    public init(_ val: Int) { self.val = val; self.next = nil; }
+    public init(_ val: Int, _ next: ListNode?) { self.val = val; self.next = next; }
+ }
+
+class Solution {
+    
+    // [1,2,3]  2
+    func splitListToParts(_ head: ListNode?, _ k: Int) -> [ListNode?] {
+              if head == nil {
+                   return [head]
+               }
+               var result: [ListNode?] = []
+               var n = 0
+               var currentHead = head
+               while currentHead != nil {
+                   n += 1
+                   currentHead = currentHead?.next
+               }
+               
+               var count = 0
+               currentHead = head
+               var pre: ListNode? = currentHead!
+               if n <= k {
+                   while count != k {
+                       if currentHead != nil {
+                           result.append(ListNode(currentHead!.val))
+                           currentHead = currentHead?.next
+                       } else {
+                           result.append(nil)
+                       }
+                       count += 1
+                   }
+                   return result
+               }
+               count = n % k
+               var sum = count
+               var c_count = 1
+               pre = ListNode()
+        
+               while currentHead != nil {
+                    pre?.next = currentHead
+                    pre?.val = (currentHead?.val)!
+                    currentHead = currentHead?.next
+                     if sum != 0 {
+                         c_count += 1
+                         if c_count == k {
+                            pre?.next = nil
+                            result.append(pre?.next)
+                             pre = ListNode()
+                             sum -= 1
+                             c_count = 1
+                         }
+                        
+                     } else {
+                         if c_count == k - 1 {
+                              result.append(pre?.next)
+                              pre?.next = nil
+                              pre = ListNode()
+                             c_count += 1
+                         }
+                     }
+                 }
+           
+               return result
+    }
+    
+    
+    // 合并链表
+    func mergeKLists(_ lists: [ListNode?]) -> ListNode? {
+        
+        if lists.count == 1 {
+            return lists[0]
+        }
+        
+        
+//        if lists.count <= 0 {
+//            return nil
+//        }
+//
+//        var head = lists[0]
+//        for i in 1 ..< lists.count {
+//          head = mergeNode(leftNode: head, rightNode: lists[i])
+//        }
+//
+//        return head
+//        return nil
+       
+        let middle = lists.count / 2
+        
+        let leftArr = mergeKLists(Array(lists[0 ..< middle]))
+        let rightArr = mergeKLists(Array(lists[ middle ..< lists.count]))
+        let result = mergeNode(leftNode: leftArr, rightNode: rightArr)
+        return result
+        
+    }
+    
+    func mergeNode(leftNode: ListNode?, rightNode: ListNode?) -> ListNode? {
+       
+        if leftNode == nil, rightNode == nil {
+            return leftNode
+        }
+        if leftNode == nil {
+            return rightNode!
+        }
+        if rightNode == nil {
+            return leftNode!
+        }
+        var left: ListNode? = leftNode
+        var right:ListNode? = rightNode
+
+        let headNode: ListNode = ListNode()
+        var trailNode = headNode
+        while left != nil, right != nil {
+            if (left?.val)! <= (right?.val)! {
+                trailNode.next = left
+                left = left?.next
+                trailNode = trailNode.next!
+            }else{
+                trailNode.next = right
+                right = right?.next
+                trailNode = trailNode.next!
+            }
+        }
+
+        trailNode.next = left != nil ? left : right
 
 
+        return headNode.next!
+    }
 
-
+}
