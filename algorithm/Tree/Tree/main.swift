@@ -174,7 +174,7 @@ print("size ==", size)
 // 查
 let getResult = treeObj.getValue(value: 8)
 
-print("getResult -- ", getResult)
+print("getResult -- ", getResult as Any)
 let printResult = treeObj.prevTree(node: treeObj.root)
 print(" printResult ==  ", printResult)
 
@@ -182,27 +182,6 @@ let maxDepth = treeObj.getMaxDepth(node: treeObj.root)
 print("maxDepth ==", maxDepth)
 
 print(" ======== end")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // 前序遍历
@@ -247,10 +226,104 @@ func prevTree_2(node: TreeNode?) -> [Int] {
 }
 
 
+// 顺序 左 -> 根 -> 右
+func inorderTree(node: TreeNode?) -> [Int] {
+    if node == nil {
+        return []
+    }
+    
+    var result: [Int] = []
+    result += inorderTree(node: node?.leftNode)
+    result.append(node!.val!)
+    result += inorderTree(node: node?.rightNode)
+    return result
+}
 
-// 后序遍历
+// 后序遍历 左 -> 右 -> 根
+func postTree(node: TreeNode?) -> [Int] {
+    
+    var result: [Int] = []
+    if node == nil {
+        return result
+    }
+    result += postTree(node: node?.leftNode)
+    result += postTree(node: node?.rightNode)
+    result.append(node!.val!)
+    return result
+}
 
+// 判断是否平衡
+func isBalanced(root: TreeNode?) -> Bool {
+    
+    if root == nil {
+        return true
+    }
+    return abs(nodeHeight(node: root?.leftNode)) - abs(nodeHeight(node: root?.rightNode)) <= 1 && isBalanced(root: root?.leftNode) && isBalanced(root: root?.rightNode)
+    
+}
 
+private func nodeHeight(node: TreeNode?) -> Int {
 
+    if node == nil {
+        return 0
+    }
 
+    let left = nodeHeight(node: node?.leftNode)
+    let right = nodeHeight(node: node?.rightNode)
 
+    return max(left, right) + 1
+}
+
+// 最小深度
+func minDepth(node: TreeNode?) -> Int {
+    
+    if node == nil {
+        return 0
+    }
+    
+    if node?.leftNode == nil {
+        return minDepth(node: node?.rightNode)
+    }
+    if node?.rightNode == nil {
+        return minDepth(node: node?.leftNode)
+    }
+    return min(minDepth(node: node?.leftNode), minDepth(node: node?.rightNode)) + 1
+}
+
+// 对称镜像 [1,2,2,3,4,4,2]
+func isSymmetric(_ root: TreeNode?) -> Bool {
+    
+    return isCheck(leftNode: root, rightNode: root)
+}
+
+func isCheck(leftNode: TreeNode?, rightNode: TreeNode?) -> Bool {
+    
+    if leftNode == nil, rightNode == nil {
+        
+        return true
+    }
+    
+    if leftNode?.val == rightNode?.val && isCheck(leftNode: leftNode?.leftNode, rightNode: rightNode?.rightNode) && isCheck(leftNode: leftNode?.rightNode, rightNode: rightNode?.leftNode) {
+       
+        return true
+        
+    } else {
+        
+        return false
+    }
+}
+
+// 翻转
+func invertTree(_ root: TreeNode?) -> TreeNode? {
+    
+    if root == nil {
+        return nil
+    }
+    
+    let leftNode  = invertTree(root?.leftNode)
+    let rightNode = invertTree(root?.rightNode)
+    
+    root?.leftNode = rightNode
+    root?.rightNode = leftNode
+    return root
+}
